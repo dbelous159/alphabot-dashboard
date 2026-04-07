@@ -391,7 +391,7 @@ export default function StrategyPage() {
             <p>• Maximum <span className="text-white">20% of portfolio</span> in any one position after scaling in</p>
             <p>• Max <span className="text-white">3 candidates</span> evaluated per cycle to limit AI spend</p>
             <p>• All 4 AI layers must independently agree before any stock trade executes</p>
-            <p>• Options trades skip the AI consensus — triggered by hard quantitative rules only</p>
+            <p>• Options trades go through the full 4-layer AI consensus — all 4 models must agree before a put is purchased</p>
             <p>• L4 Claude Opus has an explicit instruction: <span className="text-white">"When in doubt, HOLD"</span></p>
             <p>• Dynamic movers: penny stocks and illiquid names auto-filtered out</p>
           </div>
