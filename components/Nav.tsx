@@ -10,6 +10,7 @@ const links = [
   { href: '/positions', label: 'Positions' },
   { href: '/costs', label: 'Costs' },
   { href: '/strategy', label: 'Strategy' },
+  { href: '/reports', label: 'Reports' },
 ]
 
 export default function Nav() {
