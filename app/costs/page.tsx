@@ -1,3 +1,4 @@
+export const revalidate = 30
 import { supabase } from '@/lib/supabase'
 
 async function getCosts() {

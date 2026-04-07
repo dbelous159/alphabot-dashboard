@@ -59,7 +59,7 @@ export default async function HomePage() {
                 <div key={d.id} className="flex items-center justify-between py-2 border-b border-[#2a2d3a] last:border-0">
                   <div>
                     <span className="font-medium text-white text-sm">{d.symbol}</span>
-                    <span className="text-[#8b8fa8] text-xs ml-2">{new Date(d.created_at).toLocaleTimeString()}</span>
+                    <span className="text-[#8b8fa8] text-xs ml-2">{new Date(d.created_at).toLocaleTimeString('en-US', { timeZone: 'America/New_York' })}</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <span className={`text-xs font-medium ${d.action === 'BUY' ? 'text-green-400' : d.action === 'SELL' ? 'text-red-400' : 'text-[#8b8fa8]'}`}>
@@ -89,7 +89,7 @@ export default async function HomePage() {
                 <div key={t.id} className="flex items-center justify-between py-2 border-b border-[#2a2d3a] last:border-0">
                   <div>
                     <span className="font-medium text-white text-sm">{t.symbol}</span>
-                    <span className="text-[#8b8fa8] text-xs ml-2">{new Date(t.created_at).toLocaleString()}</span>
+                    <span className="text-[#8b8fa8] text-xs ml-2">{new Date(t.created_at).toLocaleString('en-US', { timeZone: 'America/New_York' })}</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <span className={`text-xs font-medium ${t.side === 'buy' ? 'text-green-400' : 'text-red-400'}`}>

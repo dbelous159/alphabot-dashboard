@@ -1,5 +1,7 @@
 import { supabase } from '@/lib/supabase'
 
+export const revalidate = 30
+
 async function getDecisions() {
   const { data } = await supabase
     .from('decisions')
@@ -49,6 +51,7 @@ export default async function DecisionsPage() {
                   <span className={`text-sm font-medium ${d.action === 'BUY' ? 'text-green-400' : d.action === 'SELL' ? 'text-red-400' : 'text-[#8b8fa8]'}`}>
                     {d.action}
                   </span>
+                  {d.sector && <span className="text-[#8b8fa8] text-xs bg-[#2a2d3a] px-2 py-0.5 rounded">{d.sector}</span>}
                   {d.executed ? (
                     <span className="bg-green-500/10 text-green-400 text-xs px-2 py-0.5 rounded-full border border-green-500/20">EXECUTED</span>
                   ) : d.rejection_layer ? (
@@ -57,14 +60,59 @@ export default async function DecisionsPage() {
                     </span>
                   ) : null}
                 </div>
-                <span className="text-[#8b8fa8] text-xs">{new Date(d.created_at).toLocaleString()}</span>
+                <span className="text-[#8b8fa8] text-xs">{new Date(d.created_at).toLocaleString('en-US', { timeZone: 'America/New_York' })}</span>
               </div>
 
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-3">
-                {d.price && <div className="text-xs"><span className="text-[#8b8fa8]">Price </span><span className="text-white">${Number(d.price).toFixed(2)}</span></div>}
-                {d.rsi && <div className="text-xs"><span className="text-[#8b8fa8]">RSI </span><span className="text-white">{Number(d.rsi).toFixed(1)}</span></div>}
-                {d.pe_ratio && <div className="text-xs"><span className="text-[#8b8fa8]">P/E </span><span className="text-white">{Number(d.pe_ratio).toFixed(1)}</span></div>}
-                {d.analyst_target && <div className="text-xs"><span className="text-[#8b8fa8]">Target </span><span className="text-white">${Number(d.analyst_target).toFixed(2)}</span></div>}
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-2 mb-3">
+                {d.price && <div className="text-xs"><span className="text-[#8b8fa8]">Price </span><span className="text-white font-medium">${Number(d.price).toFixed(2)}</span></div>}
+                {d.rsi != null && (
+                  <div className="text-xs">
+                    <span className="text-[#8b8fa8]">RSI </span>
+                    <span className={Number(d.rsi) < 30 ? 'text-green-400 font-medium' : Number(d.rsi) > 70 ? 'text-red-400 font-medium' : 'text-white'}>
+                      {Number(d.rsi).toFixed(1)}
+                    </span>
+                  </div>
+                )}
+                {d.momentum5d != null && (
+                  <div className="text-xs">
+                    <span className="text-[#8b8fa8]">Momentum 5d </span>
+                    <span className={Number(d.momentum5d) >= 0 ? 'text-green-400' : 'text-red-400'}>
+                      {Number(d.momentum5d) >= 0 ? '+' : ''}{Number(d.momentum5d).toFixed(1)}%
+                    </span>
+                  </div>
+                )}
+                {d.volume_ratio != null && (
+                  <div className="text-xs">
+                    <span className="text-[#8b8fa8]">Vol Ratio </span>
+                    <span className={Number(d.volume_ratio) > 1.5 ? 'text-yellow-400' : 'text-white'}>
+                      {Number(d.volume_ratio).toFixed(2)}x
+                    </span>
+                  </div>
+                )}
+                {d.pe_ratio != null && <div className="text-xs"><span className="text-[#8b8fa8]">P/E </span><span className="text-white">{Number(d.pe_ratio).toFixed(1)}</span></div>}
+                {d.eps != null && (
+                  <div className="text-xs">
+                    <span className="text-[#8b8fa8]">EPS </span>
+                    <span className={Number(d.eps) >= 0 ? 'text-white' : 'text-red-400'}>${Number(d.eps).toFixed(2)}</span>
+                  </div>
+                )}
+                {d.analyst_target != null && d.price != null && (
+                  <div className="text-xs">
+                    <span className="text-[#8b8fa8]">Target </span>
+                    <span className="text-white">${Number(d.analyst_target).toFixed(2)}</span>
+                    <span className={((Number(d.analyst_target) - Number(d.price)) / Number(d.price)) >= 0 ? ' text-green-400' : ' text-red-400'}>
+                      {' '}({((Number(d.analyst_target) - Number(d.price)) / Number(d.price) * 100) >= 0 ? '+' : ''}{((Number(d.analyst_target) - Number(d.price)) / Number(d.price) * 100).toFixed(0)}%)
+                    </span>
+                  </div>
+                )}
+                {d.last_earnings_surprise != null && (
+                  <div className="text-xs">
+                    <span className="text-[#8b8fa8]">Earnings Surprise </span>
+                    <span className={Number(d.last_earnings_surprise) >= 0 ? 'text-green-400' : 'text-red-400'}>
+                      {Number(d.last_earnings_surprise) >= 0 ? '+' : ''}{Number(d.last_earnings_surprise).toFixed(1)}%
+                    </span>
+                  </div>
+                )}
               </div>
 
               <div className="space-y-2">

@@ -4,9 +4,12 @@ import { usePathname } from 'next/navigation'
 
 const links = [
   { href: '/', label: 'Home' },
+  { href: '/portfolio', label: 'Portfolio' },
   { href: '/decisions', label: 'Decisions' },
   { href: '/trades', label: 'Trades' },
+  { href: '/positions', label: 'Positions' },
   { href: '/costs', label: 'Costs' },
+  { href: '/strategy', label: 'Strategy' },
 ]
 
 export default function Nav() {

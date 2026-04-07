@@ -1,3 +1,4 @@
+export const revalidate = 30
 import { supabase } from '@/lib/supabase'
 
 async function getTrades() {
@@ -51,7 +52,7 @@ export default async function TradesPage() {
                     </span>
                     <span className="text-[#8b8fa8] text-xs">{t.status}</span>
                   </div>
-                  <span className="text-[#8b8fa8] text-xs">{new Date(t.created_at).toLocaleString()}</span>
+                  <span className="text-[#8b8fa8] text-xs">{new Date(t.created_at).toLocaleString('en-US', { timeZone: 'America/New_York' })}</span>
                 </div>
 
                 <div className="grid grid-cols-3 gap-4 mb-3">
