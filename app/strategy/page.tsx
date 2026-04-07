@@ -12,8 +12,50 @@ export default function StrategyPage() {
         <div className="bg-[#1a1d27] border border-[#2a2d3a] rounded-xl p-6">
           <h2 className="text-white font-semibold mb-3">Overview</h2>
           <p className="text-[#8b8fa8] text-sm leading-relaxed">
-            AlphaBot is a fully autonomous AI trading agent running 24/7 on Railway. It scans up to 80 stocks every 30 minutes during market hours, filters for high-conviction opportunities, and routes each candidate through a 4-layer AI consensus before executing a trade. Once in a position, it reviews holdings twice daily using fundamental data to decide whether to hold, add, reduce, or exit.
+            AlphaBot is a fully autonomous AI trading agent running 24/7 on Railway. It scans 100+ stocks every 15 minutes during market hours, filters for high-conviction opportunities, and routes each candidate through a 4-layer AI consensus before executing a trade. It trades both <span className="text-white">stocks</span> and <span className="text-white">options</span> — buying puts when the market is bearish so it profits in both directions rather than sitting idle.
           </p>
+        </div>
+
+        {/* Options Trading — new */}
+        <div className="bg-[#1a1d27] border border-red-500/30 rounded-xl p-6">
+          <div className="flex items-center gap-3 mb-3">
+            <span className="text-red-400 text-lg">📉</span>
+            <h2 className="text-white font-semibold">Options Trading — Profiting from Downturns</h2>
+            <span className="text-xs px-2.5 py-1 rounded-full bg-red-500/10 text-red-400 border border-red-500/20">Put Options</span>
+          </div>
+          <p className="text-[#8b8fa8] text-sm leading-relaxed mb-4">
+            When the market is in a downtrend, AlphaBot doesn't just sit on cash — it buys <span className="text-white">put options</span>, which increase in value when stocks fall. A put is a contract that gives the right to sell 100 shares at a set price — if the stock drops, the put becomes worth more.
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
+            <div className="bg-[#12141c] rounded-lg p-4">
+              <p className="text-white text-xs font-semibold mb-2">SPY Puts — Market Hedge</p>
+              <div className="space-y-1 text-xs text-[#8b8fa8]">
+                <p>• Triggered when SPY momentum &lt; -1.5% <span className="text-white">AND</span> SMA5 below SMA20</p>
+                <p>• Buys put options on SPY (S&P 500 ETF)</p>
+                <p>• Profits if the broad market keeps falling</p>
+                <p>• Up to 2% of portfolio per position</p>
+                <p>• Only one SPY put position at a time</p>
+              </div>
+            </div>
+            <div className="bg-[#12141c] rounded-lg p-4">
+              <p className="text-white text-xs font-semibold mb-2">Individual Stock Puts</p>
+              <div className="space-y-1 text-xs text-[#8b8fa8]">
+                <p>• Triggered when a stock has RSI &gt; 65 (overbought) <span className="text-white">OR</span> momentum &lt; -5% in downtrend</p>
+                <p>• Buys puts on the specific stock</p>
+                <p>• Profits if that stock continues to fall</p>
+                <p>• Up to 2% of portfolio per position</p>
+              </div>
+            </div>
+          </div>
+          <div className="bg-[#12141c] rounded-lg p-4">
+            <p className="text-white text-xs font-semibold mb-2">Contract Selection Logic</p>
+            <div className="space-y-1 text-xs text-[#8b8fa8]">
+              <p>• <span className="text-white">Expiration:</span> 14–25 days out — enough time to be right, not too expensive</p>
+              <p>• <span className="text-white">Strike:</span> ATM to 3% out-of-the-money — moves well, affordable premium</p>
+              <p>• <span className="text-white">Liquidity filter:</span> minimum 50 open interest — no illiquid contracts</p>
+              <p>• <span className="text-white">Premium filter:</span> $0.10–$15.00/share — filters garbage and overpriced contracts</p>
+            </div>
+          </div>
         </div>
 
         {/* Diamond in the rough */}
@@ -24,7 +66,7 @@ export default function StrategyPage() {
             <span className="text-xs px-2.5 py-1 rounded-full bg-purple-500/10 text-purple-400 border border-purple-500/20">Daily 8:30 AM</span>
           </div>
           <p className="text-[#8b8fa8] text-sm leading-relaxed mb-4">
-            Every morning at 8:30 AM, a separate fundamental screener scans small and mid-cap US stocks (market cap $300M–$10B) looking for undervalued companies the momentum crowd hasn't found yet. These are evaluated as 6–12 month holds, not short-term trades.
+            Every morning at 8:30 AM, a separate fundamental screener scans small and mid-cap US stocks looking for undervalued companies the momentum crowd hasn't found yet. These are evaluated as 6–12 month holds, not short-term trades.
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
             <div className="bg-[#12141c] rounded-lg p-4">
@@ -34,13 +76,13 @@ export default function StrategyPage() {
                 <p>• Analyst price target &gt;20% above current price</p>
                 <p>• PEG ratio &lt;1 (undervalued for its growth rate)</p>
                 <p>• Revenue growing &gt;10% year-over-year</p>
-                <p>• Strong ROE (&gt;15%) and low debt</p>
+                <p>• Strong ROIC (&gt;15%) and free cash flow growth</p>
               </div>
             </div>
             <div className="bg-[#12141c] rounded-lg p-4">
               <p className="text-white text-xs font-semibold mb-2">What it avoids</p>
               <div className="space-y-1 text-xs text-[#8b8fa8]">
-                <p>• Micro-caps under $300M (too risky)</p>
+                <p>• Micro-caps under $100M (too risky)</p>
                 <p>• Penny stocks under $5</p>
                 <p>• Financials, utilities, REITs (P/E unreliable)</p>
                 <p>• Negative earnings (unprofitable companies)</p>
@@ -61,16 +103,16 @@ export default function StrategyPage() {
             <h2 className="text-white font-semibold">Market Screener</h2>
           </div>
           <p className="text-[#8b8fa8] text-sm leading-relaxed mb-4">
-            Every 30 minutes, AlphaBot builds a watchlist of up to ~80 stocks by combining a fixed core list with live market movers pulled from Financial Modeling Prep.
+            Every 15 minutes, AlphaBot builds a watchlist of 100+ stocks by combining a fixed core list with live market movers from Yahoo Finance.
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div className="bg-[#12141c] rounded-lg p-4">
-              <p className="text-white text-xs font-semibold mb-2">Core Watchlist (27 stocks)</p>
-              <p className="text-[#8b8fa8] text-xs leading-relaxed">Large-cap leaders: AAPL, MSFT, NVDA, GOOGL, META, AMZN, TSLA, AMD, JPM, BAC, GS, UNH, LLY, XOM, WMT and others. Plus SPY, QQQ, IWM, IBIT, FBTC.</p>
+              <p className="text-white text-xs font-semibold mb-2">Core Watchlist (53 stocks)</p>
+              <p className="text-[#8b8fa8] text-xs leading-relaxed">Large-cap leaders across tech, healthcare, energy, financials, and consumer sectors. AAPL, MSFT, NVDA, GOOGL, META, AMZN, TSLA, AMD, JPM, UNH, LLY, XOM, WMT and others. Plus SPY, QQQ, GLD.</p>
             </div>
             <div className="bg-[#12141c] rounded-lg p-4">
-              <p className="text-white text-xs font-semibold mb-2">Dynamic Movers (up to 50)</p>
-              <p className="text-[#8b8fa8] text-xs leading-relaxed">Live feed of today's most active stocks, biggest gainers, and biggest losers. Penny stocks (under $5) and OTC/foreign listings are filtered out.</p>
+              <p className="text-white text-xs font-semibold mb-2">Dynamic Movers (up to 75)</p>
+              <p className="text-[#8b8fa8] text-xs leading-relaxed">Live feed from 9 Yahoo Finance screeners: small cap gainers, undervalued growth, day gainers/losers, most actives, aggressive small caps, and more. Penny stocks and foreign listings filtered out.</p>
             </div>
           </div>
           <div className="mt-4 bg-[#12141c] rounded-lg p-4">
@@ -79,6 +121,7 @@ export default function StrategyPage() {
               <p>• <span className="text-white">Momentum + volume:</span> 5-day price move &gt;1.5% AND volume &gt;1.2× average</p>
               <p>• <span className="text-white">Oversold bounce:</span> RSI below 35</p>
               <p>• <span className="text-white">Golden cross:</span> 5-day MA just crossed above 20-day MA</p>
+              <p>• <span className="text-white">Spread filter:</span> bid/ask spread must be under 1.5% — illiquid names skipped before any AI call</p>
             </div>
           </div>
         </div>
@@ -90,28 +133,30 @@ export default function StrategyPage() {
             <h2 className="text-white font-semibold">Data Collection</h2>
           </div>
           <p className="text-[#8b8fa8] text-sm leading-relaxed mb-4">
-            For each candidate that passes the pre-filter, AlphaBot fetches 30 days of price history and the latest fundamental data.
+            For each candidate that passes the pre-filter, AlphaBot fetches both daily and intraday price history along with fundamental data.
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div className="bg-[#12141c] rounded-lg p-4">
               <p className="text-white text-xs font-semibold mb-2">Technical Indicators</p>
               <div className="space-y-1 text-xs text-[#8b8fa8]">
-                <p>• RSI (14-period)</p>
+                <p>• RSI (14-period) — daily and intraday</p>
                 <p>• 5-day and 20-day simple moving averages</p>
                 <p>• 5-day and 20-day price momentum</p>
                 <p>• Volume ratio vs 20-day average</p>
-                <p>• Bid/ask spread</p>
+                <p>• 15-min intraday bars (52 periods) for real-time signals</p>
+                <p>• Bid/ask spread health check</p>
               </div>
             </div>
             <div className="bg-[#12141c] rounded-lg p-4">
               <p className="text-white text-xs font-semibold mb-2">Fundamental Data (cached 24h)</p>
               <div className="space-y-1 text-xs text-[#8b8fa8]">
-                <p>• P/E ratio and EPS</p>
+                <p>• P/E ratio, EPS, and PEG ratio</p>
                 <p>• Revenue growth (year-over-year)</p>
-                <p>• Net margin and return on equity</p>
+                <p>• ROIC, ROE, FCF margin, FCF yield</p>
                 <p>• Debt-to-equity ratio</p>
                 <p>• Last 4 earnings surprises</p>
-                <p>• Analyst price targets (low, median, high)</p>
+                <p>• Analyst price targets (consensus)</p>
+                <p>• Share count trend (buybacks vs dilution)</p>
               </div>
             </div>
           </div>
@@ -182,7 +227,8 @@ export default function StrategyPage() {
           </div>
           <div className="space-y-1 text-sm text-[#8b8fa8] leading-relaxed">
             <p>• Orders placed through <span className="text-white">Alpaca Markets</span> (currently paper trading)</p>
-            <p>• Position size: <span className="text-white">0–10% of portfolio</span> per trade, set by L3</p>
+            <p>• Stock positions: <span className="text-white">0–10% of portfolio</span> per trade, set by L3</p>
+            <p>• Options positions: <span className="text-white">up to 2% of portfolio</span> per contract position</p>
             <p>• Max 3 candidates evaluated per cycle to control AI costs</p>
             <p>• Bracket orders attach stop loss and take profit at entry when possible</p>
             <p>• Trade alert emailed immediately after execution</p>
@@ -196,7 +242,7 @@ export default function StrategyPage() {
             <h2 className="text-white font-semibold">Position Management</h2>
           </div>
           <p className="text-[#8b8fa8] text-sm leading-relaxed mb-4">
-            After entering a position, AlphaBot reviews every open holding twice per day using Gemini Pro. The goal is long-term alpha — beating the S&P 500 over 3–12 months by holding winners and cutting losers when the thesis breaks.
+            After entering a position, AlphaBot reviews every open holding twice per day using Gemini Pro.
           </p>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
             {[
@@ -225,14 +271,14 @@ export default function StrategyPage() {
           <h2 className="text-white font-semibold mb-3">Daily Schedule</h2>
           <div className="space-y-2">
             {[
-              { time: '8:30 AM ET', event: 'Fundamental screener', detail: 'Scans 150 small/mid-cap stocks for undervalued diamonds — earns beats, analyst upside, PEG < 1' },
+              { time: '8:30 AM ET', event: 'Fundamental screener', detail: 'Scans 150+ stocks for undervalued diamonds — earnings beats, analyst upside, PEG < 1, ROIC > 15%' },
               { time: '9:00 AM ET', event: 'Pre-market analysis + position review', detail: 'Gemini Pro builds a market outlook and reviews all open holdings' },
-              { time: '9:31 AM ET', event: 'Market open burst', detail: 'First trading cycle — highest volatility window' },
+              { time: '9:31 AM ET', event: 'Market open burst', detail: 'First trading cycle — highest volatility window, options checked immediately' },
               { time: '9:45 AM ET', event: 'Market open burst', detail: 'Second cycle' },
               { time: '10:00 AM ET', event: 'Market open burst', detail: 'Third cycle' },
-              { time: 'Every 30 min', event: 'Trading cycles', detail: '10 AM – 4 PM ET, scanning for new opportunities' },
+              { time: 'Every 15 min', event: 'Trading cycles', detail: '10 AM – 4 PM ET — stocks and options, both directions' },
               { time: '2:00 PM ET', event: 'Midday position review', detail: 'Re-evaluates all holdings mid-session' },
-              { time: '4:30 PM ET', event: 'Daily report', detail: 'P&L summary, positions, AI cost breakdown — sent by email' },
+              { time: '4:30 PM ET', event: 'Daily report', detail: 'P&L summary, positions, AI cost breakdown — sent by email and saved to Reports page' },
             ].map(s => (
               <div key={s.time} className="flex gap-4 py-2 border-b border-[#2a2d3a] last:border-0">
                 <span className="text-white text-xs font-medium w-28 flex-shrink-0">{s.time}</span>
@@ -245,71 +291,83 @@ export default function StrategyPage() {
           </div>
         </div>
 
-        {/* 10 Intelligence Improvements */}
+        {/* Intelligence Layer */}
         <div className="bg-[#1a1d27] border border-[#2a2d3a] rounded-xl p-6">
           <h2 className="text-white font-semibold mb-1">Intelligence Layer</h2>
-          <p className="text-[#8b8fa8] text-xs mb-4">10 market-awareness systems layered on top of the base consensus</p>
+          <p className="text-[#8b8fa8] text-xs mb-4">12 market-awareness systems layered on top of the base consensus</p>
           <div className="space-y-3">
             {[
               {
                 num: '01',
-                title: 'Sector Rotation',
-                color: 'text-blue-400',
-                desc: 'Fetches live performance of 11 sector ETFs (XLK, XLV, XLF, etc.) every 30 minutes. Leading and lagging sectors are passed to every AI layer so trade ideas align with where money is actually flowing.',
+                title: 'SPY Trend Filter',
+                color: 'text-red-400',
+                desc: 'Checks SPY momentum and moving averages every cycle. If SPY momentum < -1.5% AND SMA5 is below SMA20, the bearish market filter activates — stock buys are blocked and SPY put options are purchased instead.',
               },
               {
                 num: '02',
+                title: 'Options — Bearish Profits',
+                color: 'text-orange-400',
+                desc: 'When the market or individual stocks show strong bearish signals, AlphaBot buys put options rather than sitting idle. Puts increase in value as prices fall. Contracts are selected for 14–25 day expiry at near-the-money strikes with sufficient liquidity.',
+              },
+              {
+                num: '03',
+                title: 'Intraday Signal Layer',
+                color: 'text-cyan-400',
+                desc: 'Fetches 15-minute bars (52 periods) for every candidate in addition to daily bars. Computes intraday RSI, 2-hour momentum, and intraday volume ratio — giving the AI real-time context, not just yesterday\'s data.',
+              },
+              {
+                num: '04',
+                title: 'Sector Rotation',
+                color: 'text-blue-400',
+                desc: 'Fetches live performance of 11 sector ETFs (XLK, XLV, XLF, etc.) every cycle. Leading and lagging sectors are passed to every AI layer so trade ideas align with where money is actually flowing.',
+              },
+              {
+                num: '05',
                 title: 'VIX Macro Regime',
                 color: 'text-yellow-400',
                 desc: 'Reads the VIX fear index live. VIX > 35: all new buys halted. VIX > 25: position sizes cut 50%. VIX < 15: sizes increased 20%. Every AI layer sees the current regime.',
               },
               {
-                num: '03',
+                num: '06',
                 title: 'Earnings Calendar',
                 color: 'text-orange-400',
-                desc: 'Checks Yahoo Finance calendar events before evaluating each candidate. Any stock with earnings in the next 2 days is automatically skipped — avoids the binary risk of an earnings surprise.',
+                desc: 'Checks earnings calendar events before evaluating each candidate. Any stock with earnings in the next 2 days is automatically skipped — avoids the binary risk of an earnings surprise.',
               },
               {
-                num: '04',
+                num: '07',
                 title: 'Sector Correlation Check',
                 color: 'text-purple-400',
                 desc: 'Tracks how many open positions are in each sector. If already holding 2+ positions in the same sector, new candidates in that sector are skipped to prevent concentration risk.',
               },
               {
-                num: '05',
+                num: '08',
                 title: 'Trailing Stops',
                 color: 'text-green-400',
-                desc: 'After every buy, a GTC trailing stop order is placed on Alpaca. The stop follows the price up as gains accumulate, then triggers on a reversal — locking in profits automatically without manual intervention.',
+                desc: 'After every buy, a GTC trailing stop order is placed on Alpaca. The stop follows the price up as gains accumulate, then triggers on a reversal — locking in profits automatically.',
               },
               {
-                num: '06',
+                num: '09',
                 title: 'Max Drawdown Kill Switch',
                 color: 'text-red-400',
                 desc: 'Tracks portfolio peak value in memory. If the current portfolio value drops 10% or more from the peak, all new trading is halted for the session. Protects capital during bad market conditions.',
               },
               {
-                num: '07',
-                title: 'Position Age Limit',
-                color: 'text-pink-400',
-                desc: 'Momentum trades are expected to play out within 5 days. During every position review, the AI is told how old the trade is. Trades over 5 days old receive an explicit warning in the prompt to exit if the thesis hasn\'t materialized.',
-              },
-              {
-                num: '08',
-                title: 'Insider Buying Signal',
-                color: 'text-cyan-400',
-                desc: 'Counts open-market insider purchases (not option exercises) in the last 90 days from Yahoo Finance insider transactions. Used by the screener and consensus as a conviction signal — insiders buying their own stock is bullish.',
-              },
-              {
-                num: '09',
-                title: 'Short Interest Awareness',
-                color: 'text-indigo-400',
-                desc: 'Fetches short % of float and days-to-cover for every candidate. High short interest combined with positive momentum can signal a squeeze setup. High short interest alone is flagged as squeeze risk.',
-              },
-              {
                 num: '10',
-                title: 'Earnings Surprise Streak',
+                title: 'Spread Pre-filter',
+                color: 'text-pink-400',
+                desc: 'Checks bid/ask spread before running any AI analysis. If the spread exceeds 1.5% of the stock price, the candidate is skipped entirely — wide spreads indicate illiquid or data-quality issues that make execution unreliable.',
+              },
+              {
+                num: '11',
+                title: 'Insider Buying Signal',
                 color: 'text-teal-400',
-                desc: 'Tracks how many consecutive quarters a company has beaten earnings estimates (up to the last 4). A 4-quarter streak is a strong signal of management execution quality, weighted heavily in the screener scoring.',
+                desc: 'Counts open-market insider purchases (not option exercises) in the last 90 days. Used by the screener and consensus as a conviction signal — insiders buying their own stock is a strong bullish indicator.',
+              },
+              {
+                num: '12',
+                title: 'Earnings Surprise Streak',
+                color: 'text-indigo-400',
+                desc: 'Tracks how many consecutive quarters a company has beaten earnings estimates (up to the last 4). A 4-quarter streak is heavily weighted in the screener — it signals consistent management execution.',
               },
             ].map(item => (
               <div key={item.num} className="bg-[#12141c] rounded-lg p-4 flex gap-4">
@@ -328,10 +386,12 @@ export default function StrategyPage() {
           <h2 className="text-white font-semibold mb-3">Risk Controls</h2>
           <div className="space-y-1 text-sm text-[#8b8fa8]">
             <p>• Trading pauses if buying power falls below <span className="text-white">$500</span></p>
-            <p>• Maximum <span className="text-white">10% of portfolio</span> per single trade</p>
+            <p>• Maximum <span className="text-white">10% of portfolio</span> per single stock trade</p>
+            <p>• Maximum <span className="text-white">2% of portfolio</span> per options position</p>
             <p>• Maximum <span className="text-white">20% of portfolio</span> in any one position after scaling in</p>
             <p>• Max <span className="text-white">3 candidates</span> evaluated per cycle to limit AI spend</p>
-            <p>• All 4 AI layers must independently agree before any trade executes</p>
+            <p>• All 4 AI layers must independently agree before any stock trade executes</p>
+            <p>• Options trades skip the AI consensus — triggered by hard quantitative rules only</p>
             <p>• L4 Claude Opus has an explicit instruction: <span className="text-white">"When in doubt, HOLD"</span></p>
             <p>• Dynamic movers: penny stocks and illiquid names auto-filtered out</p>
           </div>
