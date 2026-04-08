@@ -112,7 +112,11 @@ export default function StrategyPage() {
             </div>
             <div className="bg-[#12141c] rounded-lg p-4">
               <p className="text-white text-xs font-semibold mb-2">Dynamic Movers (up to 75)</p>
-              <p className="text-[#8b8fa8] text-xs leading-relaxed">Live feed from 9 Yahoo Finance screeners: small cap gainers, undervalued growth, day gainers/losers, most actives, aggressive small caps, and more. Penny stocks and foreign listings filtered out.</p>
+              <p className="text-[#8b8fa8] text-xs leading-relaxed">Live feed from Yahoo Finance screeners: small cap gainers, undervalued growth, day gainers/losers, most actives, aggressive small caps, and more. Penny stocks and foreign listings filtered out.</p>
+            </div>
+            <div className="bg-[#12141c] rounded-lg p-4">
+              <p className="text-white text-xs font-semibold mb-2">YTD Leaders (top 30)</p>
+              <p className="text-[#8b8fa8] text-xs leading-relaxed">Every 2 hours, AlphaBot batch-fetches a ~100-stock S&P 500 universe (SNOW, CRWD, PLTR, NET, COST, PANW and others) and ranks by 52-week momentum. The top 30 are added to every scan — so the strongest-performing stocks are always in the mix.</p>
             </div>
           </div>
           <div className="mt-4 bg-[#12141c] rounded-lg p-4">
